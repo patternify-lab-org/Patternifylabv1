@@ -1,0 +1,33 @@
+{
+  "id": "maximum-average-subarray-i",
+  "slug": "maximum-average-subarray-i",
+  "patternId": "sliding-window",
+  "title": "Maximum Average Subarray I",
+  "difficulty": "Easy",
+  "learningTrack": "practice",
+  "leetcodeUrl": "https://leetcode.com/problems/maximum-average-subarray-i/",
+  "summary": "Find the length-k contiguous range with the greatest average value.",
+  "explanationFile": "content/problems/maximum-average-subarray-i/explanation.md",
+  "analogyFile": "content/problems/maximum-average-subarray-i/analogy.md",
+  "examples": [
+    {
+      "input": "values = [4, -2, 5, 7, -1], k = 2",
+      "output": "6",
+      "note": "The best pair is [5, 7], whose average is 6."
+    }
+  ],
+  "tags": ["Array", "Fixed-size window", "Running sum"],
+  "recognitionClues": [
+    "Every candidate range has exactly the same length.",
+    "The candidate ranges are contiguous and overlap as they move.",
+    "A running sum can be updated by removing one value and adding one value."
+  ],
+  "visualizer": {
+    "id": "sliding-window",
+    "mode": "fixed-size",
+    "settings": {
+      "inputType": "number-array",
+      "windowSizeParameter": "k"
+    }
+  }
+}

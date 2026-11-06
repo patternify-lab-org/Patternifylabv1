@@ -1,0 +1,147 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://visual-dsa.dev/schemas/problem.schema.json",
+  "title": "Visual DSA problem",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "slug",
+    "patternId",
+    "title",
+    "difficulty",
+    "learningTrack",
+    "leetcodeUrl",
+    "summary",
+    "explanationFile",
+    "examples",
+    "tags",
+    "recognitionClues",
+    "visualizer"
+  ],
+  "properties": {
+    "id": { "$ref": "#/$defs/contentId" },
+    "slug": { "$ref": "#/$defs/contentId" },
+    "patternId": { "$ref": "#/$defs/contentId" },
+    "title": { "type": "string", "minLength": 3 },
+    "difficulty": { "enum": ["Easy", "Medium", "Hard"] },
+    "learningTrack": { "enum": ["guided", "independent", "practice"] },
+    "leetcodeUrl": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://leetcode\\.com/problems/"
+    },
+    "summary": { "type": "string", "minLength": 20 },
+    "explanationFile": { "type": "string", "pattern": "^content/.*\\.md$" },
+    "analogyFile": { "type": "string", "pattern": "^content/.*\\.md$" },
+    "examples": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["input", "output"],
+        "properties": {
+          "input": { "type": "string", "minLength": 1 },
+          "output": { "type": "string", "minLength": 1 },
+          "note": { "type": "string" }
+        }
+      },
+      "minItems": 1
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "recognitionClues": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 5 },
+      "minItems": 1
+    },
+    "visualizer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "mode"],
+      "properties": {
+        "id": { "$ref": "#/$defs/contentId" },
+        "mode": { "type": "string", "minLength": 1 },
+        "settings": { "type": "object" }
+      }
+    },
+    "walkthrough": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "title", "explanation", "codeByLanguage"],
+        "properties": {
+          "id": { "$ref": "#/$defs/contentId" },
+          "title": { "type": "string", "minLength": 2 },
+          "explanation": { "type": "string", "minLength": 10 },
+          "codeByLanguage": {
+            "type": "object",
+            "minProperties": 1,
+            "additionalProperties": false,
+            "properties": {
+              "python": { "type": "string", "minLength": 1 },
+              "java": { "type": "string", "minLength": 1 },
+              "cpp": { "type": "string", "minLength": 1 }
+            }
+          },
+          "highlightedLines": {
+            "type": "array",
+            "items": { "type": "integer", "minimum": 1 },
+            "uniqueItems": true
+          }
+        }
+      },
+      "minItems": 1
+    },
+    "solutionReferences": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["language", "file"],
+        "properties": {
+          "language": { "enum": ["python", "java", "cpp"] },
+          "file": { "type": "string", "pattern": "^content/.*\\.(py|java|cpp|md)$" }
+        }
+      },
+      "minItems": 1
+    },
+    "videos": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["title", "creator", "url", "whyRecommended"],
+        "properties": {
+          "title": { "type": "string", "minLength": 2 },
+          "creator": { "type": "string", "minLength": 1 },
+          "url": { "type": "string", "format": "uri" },
+          "whatItTeaches": { "type": "string" },
+          "whyRecommended": { "type": "string", "minLength": 10 }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "learningTrack": { "const": "guided" } },
+        "required": ["learningTrack"]
+      },
+      "then": {
+        "required": ["walkthrough", "solutionReferences"]
+      }
+    }
+  ],
+  "$defs": {
+    "contentId": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    }
+  }
+}

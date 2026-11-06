@@ -1,0 +1,26 @@
+{
+  "id": "replace-with-unique-problem-id",
+  "slug": "replace-with-unique-problem-id",
+  "patternId": "replace-with-existing-pattern-id",
+  "title": "Replace with checked source problem title",
+  "difficulty": "Easy",
+  "learningTrack": "independent",
+  "leetcodeUrl": "https://leetcode.com/problems/replace-with-problem-slug/",
+  "summary": "Write a short, original description of the task.",
+  "explanationFile": "content/problems/replace-with-unique-problem-id/explanation.md",
+  "analogyFile": "content/problems/replace-with-unique-problem-id/analogy.md",
+  "examples": [
+    {
+      "input": "Replace with a checked example",
+      "output": "Replace with its correct result",
+      "note": "Explain the result in your own words."
+    }
+  ],
+  "tags": ["Replace with topic"],
+  "recognitionClues": ["Write an original clue about when this pattern applies."],
+  "visualizer": {
+    "id": "replace-with-registered-visualizer",
+    "mode": "replace-with-visualizer-mode",
+    "settings": {}
+  }
+}

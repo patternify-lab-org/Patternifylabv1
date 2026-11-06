@@ -1,0 +1,15 @@
+{
+  "id": "replace-with-pattern-id",
+  "slug": "replace-with-pattern-id",
+  "title": "Replace with pattern title",
+  "summary": "Write a concise, original explanation of what this pattern helps a learner do.",
+  "status": "planned",
+  "topics": ["Add a topic"],
+  "recognitionCues": ["Write a useful clue for recognizing the pattern."],
+  "overviewFile": "content/patterns/replace-with-pattern-id/overview.md",
+  "visualizer": {
+    "id": "replace-with-registered-visualizer",
+    "status": "planned"
+  },
+  "problemIds": []
+}

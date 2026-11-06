@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://visual-dsa.dev/schemas/pattern.schema.json",
+  "title": "Visual DSA pattern",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "slug",
+    "title",
+    "summary",
+    "status",
+    "topics",
+    "recognitionCues",
+    "overviewFile",
+    "visualizer",
+    "problemIds"
+  ],
+  "properties": {
+    "id": { "$ref": "#/$defs/contentId" },
+    "slug": { "$ref": "#/$defs/contentId" },
+    "title": { "type": "string", "minLength": 3 },
+    "summary": { "type": "string", "minLength": 20 },
+    "status": { "enum": ["planned", "in-progress", "complete"] },
+    "topics": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "recognitionCues": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 5 },
+      "minItems": 1
+    },
+    "overviewFile": { "type": "string", "pattern": "^content/.*\\.md$" },
+    "visualizer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "status"],
+      "properties": {
+        "id": { "$ref": "#/$defs/contentId" },
+        "status": { "enum": ["planned", "available"] }
+      }
+    },
+    "problemIds": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/contentId" },
+      "uniqueItems": true
+    }
+  },
+  "$defs": {
+    "contentId": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    }
+  }
+}

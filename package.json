@@ -1,0 +1,41 @@
+{
+  "name": "visual-dsa",
+  "version": "0.1.0",
+  "private": true,
+  "description": "An open-source, visual-first learning platform for data structures and algorithms.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "npm run validate:content && next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "next typegen && tsc --noEmit",
+    "validate:content": "tsx scripts/validate-content.ts",
+    "test": "node --import tsx --test src/lib/content/validation.test.ts",
+    "check": "npm run validate:content && npm run test && npm run lint && npm run typecheck"
+  },
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.1.0",
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "next": "^16.0.0",
+    "postcss": "^8.5.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-markdown": "^10.1.0",
+    "tailwindcss": "^4.1.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.0",
+    "@next/eslint-plugin-next": "^16.0.0",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "eslint": "^10.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.9.0",
+    "typescript-eslint": "^8.72.1"
+  },
+  "overrides": {
+    "minimatch": "^11.0.1"
+  }
+}

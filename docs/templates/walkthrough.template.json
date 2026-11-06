@@ -1,0 +1,29 @@
+{
+  "walkthrough": [
+    {
+      "id": "initialize-state",
+      "title": "Start with the state",
+      "explanation": "Explain why this state is needed before adding the next algorithmic decision.",
+      "codeByLanguage": {
+        "python": "def solve(values):",
+        "java": "class Solution {",
+        "cpp": "class Solution {"
+      },
+      "highlightedLines": [1]
+    }
+  ],
+  "solutionReferences": [
+    {
+      "language": "python",
+      "file": "content/problems/replace-with-id/solutions/python.py"
+    },
+    {
+      "language": "java",
+      "file": "content/problems/replace-with-id/solutions/Solution.java"
+    },
+    {
+      "language": "cpp",
+      "file": "content/problems/replace-with-id/solutions/solution.cpp"
+    }
+  ]
+}

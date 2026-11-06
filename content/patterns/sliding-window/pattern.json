@@ -1,0 +1,19 @@
+{
+  "id": "sliding-window",
+  "slug": "sliding-window",
+  "title": "Sliding Window",
+  "summary": "Track a contiguous range as it moves through data, updating only what changes at its edges.",
+  "status": "in-progress",
+  "topics": ["Arrays", "Strings", "Two pointers"],
+  "recognitionCues": [
+    "The input asks about a contiguous subarray or substring.",
+    "The answer depends on a range that can expand or move one position at a time.",
+    "Neighboring ranges overlap, so most of their state can be reused."
+  ],
+  "overviewFile": "content/patterns/sliding-window/overview.md",
+  "visualizer": {
+    "id": "sliding-window",
+    "status": "planned"
+  },
+  "problemIds": ["maximum-average-subarray-i"]
+}

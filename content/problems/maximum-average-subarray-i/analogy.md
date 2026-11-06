@@ -1,0 +1,1 @@
+Think of a train with exactly **k** consecutive seats. You want the block of seats with the highest total comfort score. As you inspect the next block, only one passenger leaves and one enters, so update the score for those two changes instead of recounting the entire train.
