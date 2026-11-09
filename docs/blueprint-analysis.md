@@ -38,9 +38,9 @@ them later should create content records and, where necessary, isolated visualiz
 
 The intended progression is five guided problems, fifteen independent-learning problems, then
 broader practice. It is guidance, not an unlock system. The schema distinguishes guided,
-independent, and practice, and guided entries require progressive walkthroughs and solution
-references. The first release contains one small practice sample only: this avoids claiming a
-researched collection that has not been curated.
+independent, and practice. Guided entries can provide progressive code walkthroughs and solution
+references or a structured interactive lesson. The first Phase 2 lesson uses the latter so a
+learner can reason through the algorithm before seeing implementation code.
 
 Problem selection must judge prerequisite knowledge, clarity of the pattern, visual potential,
 learning value, variation, and duplication, not just difficulty or popularity. Curating the
@@ -55,16 +55,16 @@ has fields for the later experiences, while the Phase 1 UI renders only explanat
 example, pattern clues, and the source link.
 
 Walkthrough steps are records, not a fixed frontend sequence. Each step can provide code for
-Python, Java, and/or C++, its own explanation, and lines to highlight. The schema requires one or
-more steps and solution reference files for guided content, but does not prescribe a step count.
+Python, Java, and/or C++, its own explanation, and lines to highlight. A staged lesson is a
+separate content record whose stages and challenge hints drive the visual learning path.
 
 ## Visualizer and challenge model
 
-The future visualizer must support manual control and guided playback where those controls teach
-the concept. A challenge should ask the learner to operate the algorithm or reason about its
-state, not play an unrelated game. The common contract, registry, data configuration, and
-module-local CSS boundary are now established. There is no working visualizer, arbitrary code
-runner, or online judge in this phase.
+The visualizer supports manual movement, deterministic history, and guided playback that explains
+state changes. Its challenge asks the learner to operate the count and submit a result. The common
+contract, registry, data configuration, pure algorithm model, playback state, and module-local CSS
+boundary are established. Other input types, arbitrary code execution, and an online judge remain
+out of scope.
 
 ## Navigation and visual design
 
@@ -115,3 +115,12 @@ list.
 
 The final product remains a connected learning environment for DSA visualization, problem-solving
 patterns, progressive reasoning, and carefully curated practice—not an answer dispenser.
+
+## Phase 2 delivery
+
+The first completed lesson is LeetCode 2379. It moves through understanding the block row, direct
+recounting, discovering the outgoing/incoming update, naming the fixed-size Sliding Window, and
+operating a fresh challenge input. The reusable SVG visualizer is limited to B/W strings for now;
+the registered module explicitly reports unsupported configurations such as the numeric-array
+LC 643 sample. The next curriculum step is to add a running-sum visualizer mode and guided LC 643
+lesson without broadening this phase into a full problem collection.

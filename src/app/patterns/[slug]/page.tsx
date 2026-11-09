@@ -77,7 +77,12 @@ export default async function PatternPage({ params }: PatternPageProps) {
         </div>
 
         <aside className="patternAside">
-          <VisualizerFrame visualizerId={pattern.visualizer.id} />
+          <VisualizerFrame
+            visualizerId={pattern.visualizer.id}
+            problemHref={problems.find((problem) => problem.lesson)?.slug
+              ? "/problems/" + problems.find((problem) => problem.lesson)?.slug
+              : undefined}
+          />
           <section className="contentCard">
             <h2>Recognition clues</h2>
             <ul className="markdownContent">

@@ -1,0 +1,85 @@
+{
+  "title": "From a row of blocks to a reusable idea",
+  "introduction": "We will first make sense of the goal, then inspect groups one at a time. After seeing how neighboring groups overlap, we will reuse the part that does not change and try the idea on a fresh row.",
+  "stages": [
+    {
+      "id": "understand",
+      "title": "Understand the goal",
+      "summary": "We have a row of black and white blocks. Choose k neighboring positions and ask how many white blocks would need to change.",
+      "teachingPoints": [
+        "Consecutive positions are next to one another in the row, with no gap between them.",
+        "A group of size k contains exactly k neighboring blocks; k is the number shown in the controls.",
+        "Recolouring changes one white block into a black block and counts as one operation.",
+        "The minimum is the fewest changes needed among all possible groups."
+      ]
+    },
+    {
+      "id": "recount",
+      "title": "Check every group",
+      "summary": "A direct way is to inspect every possible group of k blocks, count its whites from scratch, and keep the smallest count seen.",
+      "teachingPoints": [
+        "The outlined group marks the candidate currently being checked.",
+        "Count the W blocks inside that group; that count is exactly the recolouring cost.",
+        "The best count only considers groups checked up to this step.",
+        "This is easy to reason about, but overlapping groups cause many blocks to be counted again."
+      ]
+    },
+    {
+      "id": "discover",
+      "title": "Notice what changes",
+      "summary": "Compare a group with the next group to its right. Nearly all positions are shared: only the first block leaves and one new block joins.",
+      "teachingPoints": [
+        "Start by counting the first group once.",
+        "When moving right by one position, subtract one only if the outgoing block is white.",
+        "Add one only if the incoming block is white; every block between them keeps its contribution.",
+        "Compare the updated count with the best count seen so far."
+      ]
+    },
+    {
+      "id": "pattern",
+      "title": "Name the reusable pattern",
+      "summary": "A sliding window is a continuous range whose boundaries move through the input. A fixed-size window keeps the same number of positions as it moves.",
+      "teachingPoints": [
+        "The left boundary is the first position in the current range; the right boundary is the last.",
+        "The window size is right boundary minus left boundary plus one, which stays equal to k here.",
+        "The current state is the count of white blocks inside the range, along with the best count found.",
+        "On a one-position move, the outgoing element leaves on the left and the incoming element joins on the right."
+      ]
+    },
+    {
+      "id": "challenge",
+      "title": "Try it on your own",
+      "summary": "Operate the range on a new row. Move it through the input, track the outgoing and incoming blocks, and submit the smallest white count you find.",
+      "teachingPoints": [
+        "Move one position at a time and say which block leaves and which block enters.",
+        "Update the current white count only for a white block that leaves or joins.",
+        "Keep the smallest count seen among the groups you have checked, then submit your answer."
+      ]
+    }
+  ],
+  "approachAnalysis": {
+    "straightforward": {
+      "time": "O((n - k + 1) × k), also O(nk)",
+      "extraSpace": "O(1)",
+      "context": "LeetCode 2379 has at most 100 blocks, so recounting can still be a reasonable solution for this input size."
+    },
+    "optimized": {
+      "time": "O(n)",
+      "extraSpace": "O(1)",
+      "context": "Count the first group once, then update in constant time for each position as one block leaves and one joins."
+    },
+    "nextStep": {
+      "title": "Why learn the update?",
+      "body": "The reusable update matters more as inputs grow. LeetCode 643 is the next fixed-size example, using a running sum instead of a white-block count."
+    }
+  },
+  "challenge": {
+    "input": "WBBWBWBB",
+    "windowSize": 3,
+    "hints": [
+      "Begin with the first three blocks and count the W characters inside them.",
+      "On a move to the right, subtract one if the outgoing block is W, then add one if the incoming block is W.",
+      "Keep the smallest white count you have seen so far; that is the number to submit."
+    ]
+  }
+}

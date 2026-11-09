@@ -47,7 +47,9 @@ export default async function ProblemPage({ params }: ProblemPageProps) {
         <Link className="backLink" href={"/patterns/" + pattern.slug}>
           <span aria-hidden="true">←</span> {pattern.title}
         </Link>
-        <Eyebrow>Practice sample · original learning notes</Eyebrow>
+        <Eyebrow>
+          {problem.learningTrack === "guided" ? "Guided learning · original notes" : "Practice sample · original learning notes"}
+        </Eyebrow>
         <div className="problemHeader">
           <h1>{problem.title}</h1>
           <span className={"difficultyPill " + difficultyClass}>{problem.difficulty}</span>
@@ -62,10 +64,19 @@ export default async function ProblemPage({ params }: ProblemPageProps) {
         </div>
       </section>
 
+      {problem.lesson ? (
+        <VisualizerFrame
+          visualizerId={problem.visualizer.id}
+          mode={problem.visualizer.mode}
+          configuration={problem.visualizer}
+          lesson={problem.lesson}
+        />
+      ) : null}
+
       <section className="patternLayout">
         <div className="patternMain">
           <article className="contentCard">
-            <h2>What is the task?</h2>
+            <h2>{problem.lesson ? "Problem in brief" : "What is the task?"}</h2>
             <MarkdownContent>{readContentMarkdown(problem.explanationFile)}</MarkdownContent>
           </article>
           {problem.analogyFile ? (
@@ -90,7 +101,14 @@ export default async function ProblemPage({ params }: ProblemPageProps) {
           </article>
         </div>
         <aside className="patternAside">
-          <VisualizerFrame visualizerId={problem.visualizer.id} mode={problem.visualizer.mode} />
+          {problem.lesson ? null : (
+            <VisualizerFrame
+              visualizerId={problem.visualizer.id}
+              mode={problem.visualizer.mode}
+              configuration={problem.visualizer}
+              lesson={problem.lesson}
+            />
+          )}
           <section className="contentCard">
             <h2>Pattern clues</h2>
             <ul className="markdownContent">

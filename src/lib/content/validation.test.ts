@@ -2,14 +2,39 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import samplePattern from "../../../content/patterns/sliding-window/pattern.json";
 import sampleProblem from "../../../content/problems/maximum-average-subarray-i/problem.json";
-import { validateContentRecords } from "./validation";
+import recolorProblem from "../../../content/problems/minimum-recolors-to-get-k-consecutive-black-blocks/problem.json";
+import recolorLesson from "../../../content/problems/minimum-recolors-to-get-k-consecutive-black-blocks/lesson.json";
+import { validateContentRecords, validateProblemLesson } from "./validation";
 
 describe("learning content validation", () => {
   it("accepts the repository's sample pattern and problem", () => {
-    const result = validateContentRecords([samplePattern], [sampleProblem]);
+    const result = validateContentRecords([samplePattern], [sampleProblem, recolorProblem]);
 
     assert.equal(result.valid, true);
     assert.deepEqual(result.errors, []);
+  });
+
+  it("accepts the guided lesson content and its pattern links", () => {
+    const result = validateContentRecords([samplePattern], [sampleProblem, recolorProblem]);
+    assert.equal(result.valid, true);
+    assert.deepEqual(result.errors, []);
+    assert.deepEqual(validateProblemLesson(recolorLesson).errors, []);
+  });
+
+  it("rejects a lesson whose stages are out of order", () => {
+    const invalidLesson = {
+      ...recolorLesson,
+      stages: [recolorLesson.stages[1], recolorLesson.stages[0], ...recolorLesson.stages.slice(2)]
+    };
+    assert.ok(validateProblemLesson(invalidLesson).errors.some((error) => error.includes("ordered")));
+  });
+
+  it("rejects a challenge group larger than its input", () => {
+    const invalidLesson = {
+      ...recolorLesson,
+      challenge: { ...recolorLesson.challenge, windowSize: recolorLesson.challenge.input.length + 1 }
+    };
+    assert.ok(validateProblemLesson(invalidLesson).errors.some((error) => error.includes("exceed")));
   });
 
   it("rejects a problem with an unsupported difficulty", () => {

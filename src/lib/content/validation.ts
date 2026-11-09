@@ -2,14 +2,27 @@ import Ajv, { type AnySchema, type ErrorObject } from "ajv";
 import addFormats from "ajv-formats";
 import patternSchema from "../../../content/schemas/pattern.schema.json";
 import problemSchema from "../../../content/schemas/problem.schema.json";
+import problemLessonSchema from "../../../content/schemas/problem-lesson.schema.json";
 import { listVisualizerRegistrations } from "../../visualizers/registry";
 import type { PatternContent, ProblemContent } from "./types";
+import type { ProblemLesson } from "./types";
 
 const ajv = new Ajv({ allErrors: true, strict: false });
 addFormats(ajv);
 
 const validatePattern = ajv.compile<PatternContent>(patternSchema as AnySchema);
 const validateProblem = ajv.compile<ProblemContent>(problemSchema as AnySchema);
+const validateProblemLessonRecord = ajv.compile<ProblemLesson>(problemLessonSchema as AnySchema);
+
+const lessonStageOrder: ProblemLessonStageId[] = [
+  "understand",
+  "recount",
+  "discover",
+  "pattern",
+  "challenge"
+];
+
+type ProblemLessonStageId = ProblemLesson["stages"][number]["id"];
 
 export type ContentValidationResult = {
   valid: boolean;
@@ -17,6 +30,26 @@ export type ContentValidationResult = {
   patterns: PatternContent[];
   problems: ProblemContent[];
 };
+
+export function validateProblemLesson(value: unknown): { lesson?: ProblemLesson; errors: string[] } {
+  if (!validateProblemLessonRecord(value)) {
+    return {
+      errors: (validateProblemLessonRecord.errors ?? []).map((issue) => {
+        return "Invalid problem lesson at " + (issue.instancePath || "/") + ": " + issue.message;
+      })
+    };
+  }
+
+  const lesson = value as ProblemLesson;
+  const errors: string[] = [];
+  if (lesson.stages.some((stage, index) => stage.id !== lessonStageOrder[index])) {
+    errors.push("Problem lesson stages must be ordered: " + lessonStageOrder.join(", "));
+  }
+  if (lesson.challenge.windowSize > lesson.challenge.input.length) {
+    errors.push("Problem lesson challenge windowSize cannot exceed the input length");
+  }
+  return errors.length ? { errors } : { lesson, errors };
+}
 
 function formatSchemaErrors(
   kind: "pattern" | "problem",

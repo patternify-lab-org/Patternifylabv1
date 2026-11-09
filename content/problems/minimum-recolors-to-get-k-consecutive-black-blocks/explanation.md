@@ -1,0 +1,3 @@
+You are given one row of blocks. **B** means a block is already black and **W** means it is white. Choose **k neighboring positions** and recolour each white block in that group. The goal is to make one such group all black while changing as few blocks as possible.
+
+For any chosen group, its cost is simply its number of white blocks. The answer is the smallest cost among all groups of length **k**. The original example and constraints are available on [LeetCode 2379](https://leetcode.com/problems/minimum-recolors-to-get-k-consecutive-black-blocks/); these notes use original wording and focus on the reasoning.

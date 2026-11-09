@@ -25,6 +25,29 @@ export type ProblemExample = {
   note?: string;
 };
 
+export type ProblemLessonStage = {
+  id: "understand" | "recount" | "discover" | "pattern" | "challenge";
+  title: string;
+  summary: string;
+  teachingPoints: string[];
+};
+
+export type ProblemLesson = {
+  title: string;
+  introduction: string;
+  stages: ProblemLessonStage[];
+  approachAnalysis: {
+    straightforward: { time: string; extraSpace: string; context: string };
+    optimized: { time: string; extraSpace: string; context: string };
+    nextStep: { title: string; body: string };
+  };
+  challenge: {
+    input: string;
+    windowSize: number;
+    hints: string[];
+  };
+};
+
 export type WalkthroughStep = {
   id: string;
   title: string;
@@ -44,6 +67,8 @@ export type ProblemContent = {
   summary: string;
   explanationFile: string;
   analogyFile?: string;
+  lessonFile?: string;
+  lesson?: ProblemLesson;
   examples: ProblemExample[];
   tags: string[];
   recognitionClues: string[];

@@ -34,6 +34,7 @@
     "summary": { "type": "string", "minLength": 20 },
     "explanationFile": { "type": "string", "pattern": "^content/.*\\.md$" },
     "analogyFile": { "type": "string", "pattern": "^content/.*\\.md$" },
+    "lessonFile": { "type": "string", "pattern": "^content/.*\\.json$" },
     "examples": {
       "type": "array",
       "items": {
@@ -134,7 +135,10 @@
         "required": ["learningTrack"]
       },
       "then": {
-        "required": ["walkthrough", "solutionReferences"]
+        "anyOf": [
+          { "required": ["walkthrough", "solutionReferences"] },
+          { "required": ["lessonFile"] }
+        ]
       }
     }
   ],

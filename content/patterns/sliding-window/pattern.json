@@ -13,7 +13,10 @@
   "overviewFile": "content/patterns/sliding-window/overview.md",
   "visualizer": {
     "id": "sliding-window",
-    "status": "planned"
+    "status": "available"
   },
-  "problemIds": ["maximum-average-subarray-i"]
+  "problemIds": [
+    "minimum-recolors-to-get-k-consecutive-black-blocks",
+    "maximum-average-subarray-i"
+  ]
 }

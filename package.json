@@ -4,13 +4,13 @@
   "private": true,
   "description": "An open-source, visual-first learning platform for data structures and algorithms.",
   "scripts": {
-    "dev": "next dev",
-    "build": "npm run validate:content && next build",
+    "dev": "next dev --webpack",
+    "build": "npm run validate:content && next build --webpack",
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "next typegen && tsc --noEmit",
     "validate:content": "tsx scripts/validate-content.ts",
-    "test": "node --import tsx --test src/lib/content/validation.test.ts",
+    "test": "node --import tsx --test src/lib/content/validation.test.ts src/visualizers/modules/sliding-window/algorithm.test.ts",
     "check": "npm run validate:content && npm run test && npm run lint && npm run typecheck"
   },
   "dependencies": {

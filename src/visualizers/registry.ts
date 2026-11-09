@@ -4,9 +4,11 @@ const registrations: Record<string, VisualizerRegistration> = {
   "sliding-window": {
     id: "sliding-window",
     title: "Sliding Window",
-    status: "planned",
+    status: "available",
     description:
-      "The module contract is ready for a fixed-size and variable-size visualizer with editable inputs and step controls."
+      "Explore fixed-size groups of black and white blocks, compare independent recounting with an incremental update, and practise the change on a fresh input.",
+    supports: (configuration) => configuration.settings?.inputType === "black-white-string",
+    load: () => import("./modules/sliding-window/SlidingWindowVisualizer")
   }
 };
 

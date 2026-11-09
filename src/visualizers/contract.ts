@@ -1,4 +1,5 @@
 import type { ComponentType } from "react";
+import type { ProblemLesson } from "@/lib/content/types";
 
 export type VisualizerConfiguration = {
   mode: string;
@@ -7,6 +8,7 @@ export type VisualizerConfiguration = {
 
 export type VisualizerProps = {
   configuration: VisualizerConfiguration;
+  lesson?: ProblemLesson;
 };
 
 export type VisualizerModule = {
@@ -18,5 +20,6 @@ export type VisualizerRegistration = {
   title: string;
   status: "planned" | "available";
   description: string;
+  supports?: (configuration: VisualizerConfiguration) => boolean;
   load?: () => Promise<VisualizerModule>;
 };

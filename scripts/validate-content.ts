@@ -1,6 +1,6 @@
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { relative, resolve, sep } from "node:path";
-import { validateContentRecords } from "../src/lib/content/validation";
+import { validateContentRecords, validateProblemLesson } from "../src/lib/content/validation";
 import type { PatternContent, ProblemContent } from "../src/lib/content/types";
 
 const root = process.cwd();
@@ -30,6 +30,7 @@ function referencedFiles(patterns: PatternContent[], problems: ProblemContent[])
     ...problems.flatMap((problem) => [
       problem.explanationFile,
       ...(problem.analogyFile ? [problem.analogyFile] : []),
+      ...(problem.lessonFile ? [problem.lessonFile] : []),
       ...(problem.solutionReferences ?? []).map((reference) => reference.file)
     ])
   ];
@@ -41,6 +42,21 @@ function main(): void {
     readContentDirectories("problems", "problem.json")
   );
   const errors = [...result.errors];
+
+  for (const problem of result.problems) {
+    if (!problem.lessonFile) continue;
+    const absolutePath = resolve(root, problem.lessonFile);
+    const contentRelativePath = relative(resolve(root, "content"), absolutePath);
+    if (
+      contentRelativePath.startsWith(".." + sep) ||
+      contentRelativePath === ".." ||
+      contentRelativePath.startsWith(sep) ||
+      !existsSync(absolutePath) ||
+      !statSync(absolutePath).isFile()
+    ) continue;
+    const lesson = JSON.parse(readFileSync(absolutePath, "utf8")) as unknown;
+    errors.push(...validateProblemLesson(lesson).errors.map((error) => problem.id + ": " + error));
+  }
 
   for (const file of referencedFiles(result.patterns, result.problems)) {
     const absolutePath = resolve(root, file);

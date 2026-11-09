@@ -20,9 +20,10 @@ problem ID to its pattern's manifest; the route, card, and practice list discove
 application component edits.
 
 The content schemas are JSON Schema Draft 7 so contributors can read the schema and the validator
-can use the widely supported Ajv implementation. The guided track condition requires both
-progressive walkthrough steps and language-specific solution references. The schema leaves the
-step count open per problem.
+can use the widely supported Ajv implementation. The guided track accepts either progressive
+walkthrough steps with language-specific solution references or a validated `lessonFile` for a
+staged interactive lesson. The walkthrough count stays open; staged lessons also validate their
+order and challenge bounds.
 
 ### The loader is server-only
 
@@ -38,8 +39,10 @@ maps an ID to a visualizer definition; the contract accepts a mode and plain set
 problem can reuse an existing ID without touching the registry. A genuinely new visualizer adds
 an isolated module and one registration. Its styles belong in a colocated CSS Module.
 
-The Phase 1 registry includes a planned Sliding Window entry with no implementation. The UI makes
-that status clear instead of implying controls already work.
+The registry loads the fixed-size black-and-white block visualizer for supported configurations.
+Algorithm snapshots, playback state, SVG rendering, controls, and lesson copy stay in separate
+files. Unsupported input types receive an explicit capability message until a matching
+visualizer is implemented.
 
 ### External services stay external
 
@@ -76,9 +79,9 @@ execution require separate product decisions and are deferred.
 ## Validation flow
 
 The content validator checks JSON schemas, unique identifiers, bidirectional pattern/problem
-references, registered visualizer keys, and referenced Markdown or solution files. URL formats and
-the LeetCode problem URL path are checked locally. CI deliberately does not make pull requests
-depend on live external sites.
+references, registered visualizer keys, guided lesson stage order and challenge bounds, and
+referenced Markdown, lesson, or solution files. URL formats and the LeetCode problem URL path are
+checked locally. CI deliberately does not make pull requests depend on live external sites.
 
 The GitHub Actions workflow runs on pull requests to main and pushes to main, requests only
 read access to repository contents, and runs content validation, tests, ESLint, TypeScript, and a
@@ -88,6 +91,7 @@ through the repository's hosting provider.
 
 ## Phase boundaries
 
-Phase 1 builds the routes, content model, validation, templates, contributor docs, shell, and
-visualizer registration boundary. Phase 2 can implement the Sliding Window visualizer and richer
-problem experiences without changing the content-to-route model.
+Phase 1 built the routes, content model, validation, templates, contributor docs, shell, and
+visualizer registration boundary. Phase 2 implements one guided Sliding Window experience through
+that boundary without changing the repository-driven content-to-route model. Numeric arrays,
+variable-size windows, solution code, and broader curriculum remain future extensions.

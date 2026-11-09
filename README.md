@@ -7,9 +7,10 @@ The learning journey is:
 
 **Understand → Visualise → Recognise → Practise → Solve independently.**
 
-This repository is in Phase 1: a Next.js foundation, a contributor-managed content pipeline, and
-one small Sliding Window sample. The interactive visualizer and full learning curriculum are
-planned for a later phase.
+The Phase 1 foundation now supports the first Phase 2 learning experience: a guided, interactive
+lesson for LeetCode 2379 that introduces fixed-size Sliding Window reasoning from the problem
+story through independent practice. The broader curriculum and other visualizer variants remain
+future work.
 
 ## Requirements
 
@@ -31,10 +32,10 @@ Open http://localhost:3000.
 
 - src/app/ contains the App Router routes and shared layout.
 - src/components/ contains reusable interface pieces.
-- src/lib/content/ contains content types, validation, and the server-side content loader.
-- src/visualizers/ contains the visualizer contract and registry.
+- src/lib/content/ contains content types, schema validation, and the server-side content loader.
+- src/visualizers/ contains the visualizer contract, registry, algorithms, state models, and isolated modules.
 - content/patterns/ and content/problems/ contain contributor-managed learning material.
-- content/schemas/ defines the JSON content formats.
+- content/schemas/ defines pattern, problem, and guided-lesson JSON formats.
 - docs/templates/ and CONTRIBUTING.md guide content contributions.
 - .github/workflows/validate.yml runs validation, tests, lint, type checks, and a production build
   for pull requests to main.
@@ -59,8 +60,8 @@ content validation, tests, lint, and TypeScript checks.
 Create a folder under content/problems/, copy
 [docs/templates/problem.template.json](docs/templates/problem.template.json), and add an original
 Markdown explanation. Link the problem ID from the appropriate pattern metadata file. An ordinary
-problem contribution does not require application component changes. Guided problems also need
-walkthrough steps and solution references, as required by the schema.
+problem contribution does not require application component changes. A guided problem can use
+walkthroughs with solution references or a schema-validated staged lesson (`lessonFile`).
 
 Start with [CONTRIBUTING.md](CONTRIBUTING.md). Do not copy LeetCode statements or editorials; link
 to the source problem and write original learning material.

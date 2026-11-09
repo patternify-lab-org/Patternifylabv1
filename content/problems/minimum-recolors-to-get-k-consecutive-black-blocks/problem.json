@@ -1,0 +1,36 @@
+{
+  "id": "minimum-recolors-to-get-k-consecutive-black-blocks",
+  "slug": "minimum-recolors-to-get-k-consecutive-black-blocks",
+  "patternId": "sliding-window",
+  "title": "Minimum Recolors to Get K Consecutive Black Blocks",
+  "difficulty": "Easy",
+  "learningTrack": "guided",
+  "leetcodeUrl": "https://leetcode.com/problems/minimum-recolors-to-get-k-consecutive-black-blocks/",
+  "summary": "Find the fewest white blocks to recolour so that one run of k neighboring blocks is black.",
+  "explanationFile": "content/problems/minimum-recolors-to-get-k-consecutive-black-blocks/explanation.md",
+  "analogyFile": "content/problems/minimum-recolors-to-get-k-consecutive-black-blocks/analogy.md",
+  "lessonFile": "content/problems/minimum-recolors-to-get-k-consecutive-black-blocks/lesson.json",
+  "examples": [
+    {
+      "input": "blocks = \"WBBWWBBWBW\", k = 7",
+      "output": "3",
+      "note": "The first seven positions contain three white blocks, and no length-seven group needs fewer recolours."
+    }
+  ],
+  "tags": ["String", "Fixed-size range", "Counting"],
+  "recognitionClues": [
+    "Every candidate group contains exactly k neighboring blocks.",
+    "The cost of a group is the number of white blocks inside it.",
+    "Neighboring candidate groups overlap in all but one position."
+  ],
+  "visualizer": {
+    "id": "sliding-window",
+    "mode": "fixed-size",
+    "settings": {
+      "inputType": "black-white-string",
+      "initialInput": "WBBWWBBWBW",
+      "windowSize": 7,
+      "windowSizeParameter": "k"
+    }
+  }
+}

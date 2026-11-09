@@ -1,0 +1,1 @@
+Imagine a short stretch of **k** neighboring seats that you want to cover with black cushions. Some cushions are already black; each white one needs to be swapped. Compare possible stretches and choose the one that needs the fewest swaps.

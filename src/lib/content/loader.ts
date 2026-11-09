@@ -3,8 +3,8 @@ import "server-only";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { isAbsolute, relative, resolve, sep } from "node:path";
 import { notFound } from "next/navigation";
-import type { PatternContent, ProblemContent } from "./types";
-import { validateContentRecords } from "./validation";
+import type { PatternContent, ProblemContent, ProblemLesson } from "./types";
+import { validateContentRecords, validateProblemLesson } from "./validation";
 
 const CONTENT_ROOT = resolve(process.cwd(), "content");
 const CONTENT_PREFIX = "content/";
@@ -50,6 +50,7 @@ export function loadContent(): { patterns: PatternContent[]; problems: ProblemCo
     ...result.problems.flatMap((problem) => [
       problem.explanationFile,
       ...(problem.analogyFile ? [problem.analogyFile] : []),
+      ...(problem.lessonFile ? [problem.lessonFile] : []),
       ...(problem.solutionReferences ?? []).map((reference) => reference.file)
     ])
   ];
@@ -65,11 +66,38 @@ export function loadContent(): { patterns: PatternContent[]; problems: ProblemCo
     }
   }
 
+  const lessonsByProblem = new Map<string, ProblemLesson>();
+  for (const problem of result.problems) {
+    if (!problem.lessonFile) {
+      continue;
+    }
+    try {
+      const absolutePath = resolveContentFile(problem.lessonFile);
+      if (!existsSync(absolutePath) || !statSync(absolutePath).isFile()) {
+        continue;
+      }
+      const validation = validateProblemLesson(readJsonFile(absolutePath));
+      if (validation.errors.length) {
+        result.errors.push(...validation.errors.map((error) => problem.id + ": " + error));
+      } else if (validation.lesson) {
+        lessonsByProblem.set(problem.id, validation.lesson);
+      }
+    } catch (error) {
+      result.errors.push(error instanceof Error ? error.message : "Invalid problem lesson");
+    }
+  }
+
   if (result.errors.length > 0) {
     throw new Error("Invalid Visual DSA content:\n- " + result.errors.join("\n- "));
   }
 
-  return { patterns: result.patterns, problems: result.problems };
+  return {
+    patterns: result.patterns,
+    problems: result.problems.map((problem) => ({
+      ...problem,
+      ...(lessonsByProblem.has(problem.id) ? { lesson: lessonsByProblem.get(problem.id) } : {})
+    }))
+  };
 }
 
 export function getPatterns(): PatternContent[] {

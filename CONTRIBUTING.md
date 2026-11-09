@@ -17,9 +17,9 @@ reason to include it.
    is a recommendation, not an access restriction.
 7. Use the pattern's registered visualizer ID and add only declarative configuration in the
    problem file. Do not add CSS or executable code to content files.
-8. For learningTrack: "guided", include progressive walkthrough steps and solutionReferences.
-   A new walkthrough can contain a different number of steps from any other problem. Language
-   references can use Python, Java, or C++.
+8. For learningTrack: "guided", include progressive walkthrough steps and solutionReferences,
+   or a schema-validated `lessonFile` with ordered stages and an independent challenge. A staged
+   lesson can delay code solutions until a later learning step.
 9. Add video recommendations only after checking the title, creator, link, relevance, and
    accessibility.
 10. Run the checks below and submit a pull request.
@@ -33,9 +33,10 @@ reason to include it.
     npm run build
 
 The content validator checks each record against JSON Schema, duplicate IDs and slugs, pattern to
-problem references, registered visualizer IDs, and the existence of referenced local files. Link
-syntax and the LeetCode host/path are checked. Live external availability is not checked in pull
-requests because external services can block automated requests or change independently.
+problem references, registered visualizer IDs, guided lesson stage order and challenge bounds, and
+the existence of referenced Markdown, lesson, or solution files. Link syntax and the LeetCode
+host/path are checked. Live external availability is not checked in pull requests because
+external services can block automated requests or change independently.
 
 The pull request workflow repeats these checks. Keep one problem or one isolated visualizer in a
 contribution where practical so review stays focused.
